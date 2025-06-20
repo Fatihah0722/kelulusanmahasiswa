@@ -9,7 +9,7 @@ with open("model_graduation.pkl", "rb") as file:
 st.title("Prediksi Kategori Masa Studi Mahasiswa")
 
 st.markdown("""
-Masukkan informasi berikut untuk memprediksi kategori waktu kelulusan:
+Masukkan informasi berikut untuk memprediksi apakah mahasiswa akan **Ontime** atau **Late** lulus.
 """)
 
 # Input dari pengguna
@@ -37,7 +37,12 @@ if st.button("Prediksi"):
 
         # Prediksi
         predicted = nb.predict(new_data_df)
-        st.success(f"Prediksi kategori masa studi adalah: {predicted[0]}")
+
+        # Mapping hasil prediksi ke label
+        label_mapping = {0: "Ontime", 1: "Late"}
+        result_label = label_mapping.get(predicted[0], "Tidak diketahui")
+
+        st.success(f"🎓 Prediksi kategori masa studi adalah: **{result_label}**")
 
     except ValueError:
         st.error("Input pendidikan orang tua harus berupa angka.")
